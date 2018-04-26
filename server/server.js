@@ -3,7 +3,7 @@ const http=require('http');
 const path=require('path');
 const socketIO=require('socket.io');
 
-var {generateMessage}=require('./utils/message');
+var {generateMessage,generateLocationMessage}=require('./utils/message');
 const port=process.env.PORT || 3000;
 const rootURL=(port==3000) ?'http://localhost:3000/':'https://arcane-stream-39208.herokuapp.com/';
 const publicPath=path.join(__dirname,'../public');
@@ -19,11 +19,9 @@ io.on('connection',(socket)=>{
         
         io.emit('newMessage',generateMessage(newMessage.from,newMessage.text));
         callback('Acknowledgment from server');
-        // socket.broadcast.emit('newMessage',{
-        //     from:newMessage.from,
-        //     text:newMessage.text,
-        //     createdAt:new Date().getTime()
-        // });
+    });
+    socket.on('createLocationMessage',(cords)=>{
+        io.emit('newLocationMessage',generateLocationMessage('Admin',cords.latitude,cords.longitude));
     });
     socket.on('disconnect',()=>{
         console.log('disconnected from client')
