@@ -13,3 +13,9 @@ socket.on('disconnect',function(){
 socket.on('newMessage',function(message){
     console.log('new Message.',message);
 });
+socket.on('newUser',function(message){
+    console.log(': ',message);
+});
+socket.on('userJoined',function(message){
+    console.log(': ',message);
+});

@@ -11,24 +11,29 @@ var server=http.createServer(app);
 var io=socketIO(server);
 app.use(express.static(publicPath));
 io.on('connection',(socket)=>{
-    console.log('New user connected');
-    // socket.emit('newEmail',{
-    //     from: 'mku@abc.com',
-    //     text:'some email text',
-    //     subject:'Random Email'
-    // });
-    // socket.emit('newMessage',{
-    //     to:'test@abc.com',
-    //     text:'hello from server',
-    //     createdAt:new Date()
-    // });
+    socket.emit('newUser',{
+        from:'Admin',
+        text:'Welcome to the chat room',
+        createdAt: new Date().getTime()
+    });
+    socket.broadcast.emit('userJoined',{
+        from:'Admin',
+        text:'New user joined',
+        createdAt: new Date().getTime()
+    });
     socket.on('createMessage',(newMessage)=>{
         console.log('Created Message: ',newMessage);
+        
         io.emit('newMessage',{
             from:newMessage.from,
             text:newMessage.text,
             createdAt:new Date().getTime()
         });
+        // socket.broadcast.emit('newMessage',{
+        //     from:newMessage.from,
+        //     text:newMessage.text,
+        //     createdAt:new Date().getTime()
+        // });
     });
     socket.on('disconnect',()=>{
         console.log('disconnected from client')
