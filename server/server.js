@@ -18,10 +18,10 @@ io.on('connection',(socket)=>{
         console.log('Created Message: ',newMessage);
         
         io.emit('newMessage',generateMessage(newMessage.from,newMessage.text));
-        callback('Acknowledgment from server');
+        callback();
     });
     socket.on('createLocationMessage',(cords)=>{
-        io.emit('newLocationMessage',generateLocationMessage('Admin',cords.latitude,cords.longitude));
+        io.emit('newLocationMessage',generateLocationMessage('User',cords.latitude,cords.longitude));
     });
     socket.on('disconnect',()=>{
         console.log('disconnected from client')

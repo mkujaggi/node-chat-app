@@ -5,17 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/styles.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/libs/bootstrap.min.css" />
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.3.1.min.js"></script>
     <script src="/js/index.js"></script>
 </head>
-<body>
-    <ol id="messages"></ol>
-    <form id="message-form">
-        <input name="message" type="text" placeholder="type new messge"/>
-        <button>Send</button>
-    </form>
-    <button id="send-location">Send Location</button>
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users"></div>
+    </div>
+    <div class="chat__main">
+            <ol id="messages" class="chat__messages"></ol>
+            <div class="chat__footer"> 
+                <form id="message-form">
+                    <input name="message" type="text" placeholder="type new messge" autofocus autocomplete="off"/>
+                    <button>Send</button>
+                </form>
+                <button id="send-location">Send Location</button>
+            </div>
+            
+    </div>
+    
 </body>
 </html>
