@@ -32,13 +32,19 @@ io.on('connection',(socket)=>{
         callback();
     });
     socket.on('createMessage',(newMessage,callback)=>{
-        console.log('Created Message: ',newMessage);
+        var user=users.getUser(socket.id);
+        if(user && isRealString(newMessage.text)){
+            io.to(user.room).emit('newMessage',generateMessage(user.name,newMessage.text));
+        }        
         
-        io.emit('newMessage',generateMessage(newMessage.from,newMessage.text));
         callback();
     });
     socket.on('createLocationMessage',(cords)=>{
-        io.emit('newLocationMessage',generateLocationMessage('User',cords.latitude,cords.longitude));
+        var user=users.getUser(socket.id);
+        if(user){
+            io.to(user.room).emit('newLocationMessage',generateLocationMessage(user.name,cords.latitude,cords.longitude));
+        }
+        
     });
     socket.on('disconnect',()=>{
         var user=users.removeUser(socket.id);
